@@ -8,11 +8,17 @@ A     A  B   B A   A A   A SSSS    I
 Terraform AWS Infrastructure Deployment
 Author: Abaasi
 */
+
 provider "aws" {
   region = "us-east-1"
 }
 
 provider "random" {}
+
+# Fetch available availability zones
+data "aws_availability_zones" "available" {
+  state = "available"
+}
 
 # Create a VPC
 resource "aws_vpc" "main" {
@@ -29,7 +35,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.1.0/24"
-  availability_zone = "us-east-1a"
+  availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
     Name = "Terraform-Public-Subnet"
@@ -40,7 +46,7 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "public_2" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.2.0/24"
-  availability_zone = "us-east-1b"
+  availability_zone = data.aws_availability_zones.available.names[1]
 
   tags = {
     Name = "Terraform-Public-Subnet-2"
@@ -111,6 +117,21 @@ resource "aws_s3_bucket_policy" "example" {
   })
 }
 
+# Add lifecycle rules to the S3 bucket
+resource "aws_s3_bucket_lifecycle_configuration" "example" {
+  bucket = aws_s3_bucket.example.id
+
+  rule {
+    id = "expire-old-files"
+
+    expiration {
+      days = 90
+    }
+
+    status = "Enabled"
+  }
+}
+
 # Create an RDS instance
 resource "aws_db_instance" "example" {
   allocated_storage    = 20
@@ -151,7 +172,7 @@ resource "aws_security_group" "rds" {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"] # Restrict to VPC CIDR
   }
 
   egress {
@@ -177,6 +198,14 @@ output "s3_bucket_name" {
 
 output "rds_endpoint" {
   value = aws_db_instance.example.endpoint
+}
+
+output "public_subnet_id" {
+  value = aws_subnet.public.id
+}
+
+output "public_subnet_2_id" {
+  value = aws_subnet.public_2.id
 }
 
 output "project_author" {
