@@ -25,3 +25,6 @@ This project demonstrates how to use **Terraform** to provision and manage **AWS
 
    ## Contributors
 - **Abaasi**: Project author and maintainer.
+
+## About the Author
+Hi, I'm **Abaasi**, a cloud and DevOps enthusiast passionate about automating infrastructure using Terraform. This project is a reflection of my skills and expertise in AWS and Infrastructure as Code (IaC). Connect with me on [LinkedIn](https://www.linkedin.com/in/abaasi-k-b79420340) or check out my other projects on [GitHub](https://github.com/abaasi256).

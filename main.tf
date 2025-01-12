@@ -20,7 +20,7 @@ resource "aws_vpc" "main" {
 
   tags = {
     Name        = "Terraform-VPC"
-    CreatedBy   = "Abasi"
+    CreatedBy   = "Abaasi"
     Project     = "Terraform-AWS-Deployment"
   }
 }
@@ -177,4 +177,8 @@ output "s3_bucket_name" {
 
 output "rds_endpoint" {
   value = aws_db_instance.example.endpoint
+}
+
+output "project_author" {
+  value = "This infrastructure was deployed by Abaasi using Terraform."
 }
