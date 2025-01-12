@@ -19,9 +19,9 @@ resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
-    Name        = "Terraform-VPC"
-    CreatedBy   = "Abaasi"
-    Project     = "Terraform-AWS-Deployment"
+    Name      = "Terraform-VPC"
+    CreatedBy = "Abaasi"
+    Project   = "Terraform-AWS-Deployment"
   }
 }
 
