@@ -25,7 +25,11 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
+        env:
+          TF_VAR_rds_password: ${{ secrets.TF_VAR_rds_password }}
         run: terraform plan
 
       - name: Terraform Apply
+        env:
+          TF_VAR_rds_password: ${{ secrets.TF_VAR_rds_password }}
         run: terraform apply -auto-approve
