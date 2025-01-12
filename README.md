@@ -22,3 +22,6 @@ This project demonstrates how to use **Terraform** to provision and manage **AWS
    ```bash
    git clone https://github.com/abaasi256/terraform-aws-ec2.git
    cd terraform-aws-ec2
+
+   ## Contributors
+- **Abaasi**: Project author and maintainer.
